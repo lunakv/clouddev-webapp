@@ -34,9 +34,13 @@ namespace clouddev_webapp.Pages
 
         private BlobContainerClient CreateClient()
         {
-            string connectionString = Configuration.GetConnectionString("BlobStorage");
+            //string connectionString = Configuration.GetConnectionString("BlobStorage");
             string containerName = Configuration.GetValue<string>("StorageContainerName");
-            return new BlobContainerClient(connectionString, containerName);
+            //return new BlobContainerClient(connectionString, containerName);
+
+            string storageName = "lunakvstore";
+            string containerEndpoint = $"https://{storageName}.blob.core.windows.net/{containerName}";
+            return new BlobContainerClient(new Uri(containerEndpoint), new Azure.Identity.DefaultAzureCredential());
         }
     }
 }
